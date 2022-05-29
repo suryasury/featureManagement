@@ -2,14 +2,12 @@ const db = require("../models");
 const { Feature, User, Group, UserFeature, GroupUsers, GroupFeatures } = db;
 const Op = db.Sequelize.Op;
 
+// Create a Feature
 exports.createFeature = async (req, res) => {
   if (!req.body.featureName) {
     res.status(400).send(errorResponse("Content cannot be empty."));
     return;
   }
-  
-
-  // Create a Feature
   const feature = {
     featureName: req.body.featureName,
     featureStatus: req.body.featureStatus,
@@ -30,6 +28,7 @@ exports.createFeature = async (req, res) => {
   }
 };
 
+// Create a User
 exports.createUser = async (req, res) => {
   if (!req.body.userName) {
     res.status(400).send(errorResponse("Content cannot be empty."));
@@ -50,62 +49,7 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.fetchAllUsers = async (req, res) => {
-  try {
-    const result = await User.findAll();
-    res.send(result);
-  } catch (err) {
-    res
-      .status(500)
-      .send(errorResponse(err.message || "Content cannot be empty."));
-  }
-};
-
-exports.assignFeatureToUser = async (req, res) => {
-  if (!req.body.userId) {
-    res.status(400).send(errorResponse("User Id cannot be empty."));
-    return;
-  }
-
-  try {
-    const userFeatureRes = await UserFeature.findOne({
-      where: { userId: req.body.userId, featureId: req.body.featureId },
-    });
-    if (userFeatureRes) {
-      return res.send(
-        errorResponse("User is already associated with this given Feature.")
-      );
-    }
-    const userRes = await User.findOne({ where: { userId: req.body.userId } });
-    const featureRes = await Feature.findOne({
-      where: { featureId: req.body.featureId },
-    });
-
-    console.log("Res", userRes);
-    if (userRes && featureRes) {
-      var createRel = {
-        featureId: req.body.featureId,
-        userId: req.body.userId,
-        featureStatus: req.body.featureStatus,
-      };
-
-      var cResult = await UserFeature.create(createRel);
-
-      res.send({ status: "OK", data: cResult });
-      return;
-    }
-    res.send(errorResponse("User Id or Feature Id is not valid."));
-  } catch (err) {
-    res
-      .status(500)
-      .send(
-        errorResponse(
-          err.message || "Error occurred while creating the feature."
-        )
-      );
-  }
-};
-
+// Create a Group
 exports.createGroup = async (req, res) => {
   if (!req.body.groupName) {
     res.status(400).send(errorResponse("Groupname cannot be empty."));
@@ -132,6 +76,153 @@ exports.createGroup = async (req, res) => {
   }
 };
 
+// Fetch all users
+exports.fetchAllUsers = async (req, res) => {
+  try {
+    const result = await User.findAll();
+    res.send(result);
+  } catch (err) {
+    res
+      .status(500)
+      .send(errorResponse(err.message || "Content cannot be empty."));
+  }
+};
+
+// Assign a feature to a user
+exports.assignFeatureToUser = async (req, res) => {
+  if (!req.body.userId) {
+    res.status(400).send(errorResponse("User Id cannot be empty."));
+    return;
+  }
+
+  try {
+    const userFeatureRes = await UserFeature.findOne({
+      where: { userId: req.body.userId, featureId: req.body.featureId },
+    });
+    if (userFeatureRes) {
+      return res.send(
+        errorResponse("User is already associated with this given Feature.")
+      );
+    }
+    const userRes = await User.findOne({ where: { userId: req.body.userId } });
+    const featureRes = await Feature.findOne({
+      where: { featureId: req.body.featureId },
+    });
+    if (userRes && featureRes) {
+      var createRel = {
+        featureId: req.body.featureId,
+        userId: req.body.userId,
+        featureStatus: req.body.featureStatus,
+      };
+
+      var cResult = await UserFeature.create(createRel);
+
+      res.send({ status: "OK", data: cResult });
+      return;
+    }
+    res.send(errorResponse("User Id or Feature Id is not valid."));
+  } catch (err) {
+    res
+      .status(500)
+      .send(
+        errorResponse(
+          err.message || "Error occurred while creating the feature."
+        )
+      );
+  }
+};
+
+// Add Feature to a Group
+exports.addFeatureToGroup = async (req, res) => {
+  if (!req.body.groupId || !req.body.featureId || !req.body.featureStatus) {
+    res.status(400).send(errorResponse("Content cannot be empty."));
+    return;
+  }
+  try {
+    const groupFeatureRes = await GroupFeatures.findOne({
+      where: { groupId: req.body.groupId, featureId: req.body.featureId },
+    });
+    if (groupFeatureRes) {
+      return res.send(
+        errorResponse("Feature is already associated with this Group.")
+      );
+    }
+    const groupRes = await Group.findOne({
+      where: { groupId: req.body.groupId },
+    });
+    const featureRes = await Feature.findOne({
+      where: { featureId: req.body.featureId },
+    });
+    if (groupRes && featureRes) {
+      var createRel = {
+        featureId: req.body.featureId,
+        groupId: req.body.groupId,
+        featureStatus: req.body.featureStatus,
+      };
+
+      var cResult = await GroupFeatures.create(createRel);
+
+      res.send({ status: "OK", data: cResult });
+      return;
+    }
+    res.send(errorResponse("Group Id or Feature Id is not valid."));
+  } catch (err) {
+    res
+      .status(500)
+      .send(
+        errorResponse(
+          err.message || "Error occurred while creating the feature."
+        )
+      );
+  }
+};
+
+// Assign a user to a group
+exports.assignUserToGroup = async (req, res) => {
+  if (!req.body.groupId || !req.body.userId) {
+    res.status(400).send(errorResponse("Content cannot be empty."));
+    return;
+  }
+
+  try {
+    const groupUserRes = await GroupUsers.findOne({
+      where: { groupId: req.body.groupId, userId: req.body.userId },
+    });
+    if (groupUserRes) {
+      return res.send(
+        errorResponse("User is already associated with this Group.")
+      );
+    }
+    const groupRes = await Group.findOne({
+      where: { groupId: req.body.groupId },
+    });
+    const userRes = await User.findOne({
+      where: { userId: req.body.userId },
+    });
+    if (groupRes && userRes) {
+      var createRel = {
+        userId: req.body.userId,
+        groupId: req.body.groupId,
+      };
+
+      var cResult = await GroupUsers.create(createRel);
+
+      res.send({ status: "OK", data: cResult });
+      return;
+    }
+    res.send(errorResponse("Group Id or User Id is not valid."));
+  } catch (err) {
+    res
+      .status(500)
+      .send(
+        errorResponse(
+          err.message || "Error occurred while creating the feature."
+        )
+      );
+  }
+};
+
+//Fetch users treatment
 exports.fetchUserFeatures = async (req, res) => {
   if (!req.body.userId) {
     res.status(400).send(errorResponse("User ID cannot be empty."));

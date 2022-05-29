@@ -14,6 +14,10 @@ module.exports = (app) => {
 
   router.post("/fetchUserFeatures", features.fetchUserFeatures);
 
+  router.post("/addFeatureToGroup", features.addFeatureToGroup)
+
+  router.post("/assignUserToGroup", features.assignUserToGroup )
+
   router.get("/getAllUsers", features.fetchAllUsers);
 
   app.use("/api/feature", router);
