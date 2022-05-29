@@ -1,6 +1,6 @@
 # Feature Management
 
-1. Download and install NodeJS(LTS Versiob) from [here](https://nodejs.org/en/).
+1. Download and install NodeJS(LTS Version) from [here](https://nodejs.org/en/).
 2. Download and install mysql from [here](https://dev.mysql.com/downloads/windows/installer/8.0.html).
 3. Clone repository from [here](git@github.com:suryasury/featureManagement.git)
 
