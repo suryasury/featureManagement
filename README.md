@@ -2,7 +2,7 @@
 
 1. Download and install NodeJS(LTS Version) from [here](https://nodejs.org/en/).
 2. Download and install mysql from [here](https://dev.mysql.com/downloads/windows/installer/8.0.html).
-3. Clone repository from [here](git@github.com:suryasury/featureManagement.git)
+3. Clone repository from [here](https://github.com/suryasury/featureManagement)
 
 ## Installation
 
@@ -32,7 +32,7 @@ npm start
 }
 ```
 
-#### 1. Creating a user 
+#### 2. Creating a user 
 
 ```bash
 # Endpoint
@@ -46,7 +46,7 @@ npm start
 }
 ```
 
-#### 2. Creating a feature
+#### 3. Creating a feature
 
 ```bash
 # Endpoint
@@ -59,7 +59,7 @@ npm start
   "featureStatus":"true"
 }
 ```
-#### 3. Creating a Group
+#### 4. Creating a Group
 ```bash
 # Endpoint
 /api/feature/createGroup
@@ -70,7 +70,7 @@ npm start
   "groupName":"Premium group",
 }
 ```
-#### 4. Assign feature to user
+#### 5. Assign feature to user
 ```bash
 # Endpoint
 /api/feature/assignFeatureToUser
@@ -83,7 +83,7 @@ npm start
   "featureStatus": false
 }
 ```
-#### 5. Assign feature to Group
+#### 6. Assign feature to Group
 ```bash
 # Endpoint
 /api/feature/addFeatureToGroup
@@ -96,7 +96,7 @@ npm start
   "featureStatus":"true" 
 }
 ```
-#### 6. Assign User to Group
+#### 7. Assign User to Group
 ```bash
 # Endpoint
 /api/feature/assignUserToGroup
@@ -108,13 +108,13 @@ npm start
   "userId":8
 }
 ```
-#### 7. Fetch all users
+#### 8. Fetch all users
 ```bash
 # Endpoint
 /api/feature/getAllUsers
 # Method: GET
 ```
-#### 8. For the admin panel hit the following URL,
+#### 9. For the admin panel hit the following URL,
 ```bash
 HTTP://localhost:8080/admin
 ```
