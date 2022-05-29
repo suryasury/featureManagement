@@ -19,6 +19,19 @@ npm start
 4. Server will run in localhost under the port 8080
 
 ## APIS
+#### 1. Fetch Features and treatments for user.
+
+```bash
+# Endpoint
+/api/feature/fetchUserFeatures
+# Method: POST
+
+#Payload
+{
+  "userId":1,
+}
+```
+
 #### 1. Creating a user 
 
 ```bash
