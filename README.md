@@ -13,6 +13,9 @@
 npm install
 ```
 3. Run the following command to run the project.
+```bash
+npm start
+```
 4. Server will run in localhost under the port 8080
 
 ## APIS
