@@ -7,7 +7,7 @@
 ## Installation
 
 1. Open project in visual studio code.
-2. Run the following command inside the project directory. This will install all the dependencies for the project.
+2. Run the following command inside the project root directory. This will install all the dependencies for the project.
 
 ```bash
 npm install
